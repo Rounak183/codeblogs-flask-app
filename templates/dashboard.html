@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{ url_for('static', filename='assets/img/admin-panel.jpg') }}'">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Admin Panel</h1>
+                    <span class="subheading">Edit and Manage The Blogs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-10">
+
+            <div class="site-heading">
+                <h1>Basic Functions</h1>
+            </div>
+
+            <div class="d-flex btn-toolbar">
+                <button style="margin: 4px" class="btn btn-primary text-uppercase"><a href="/add" style="color:white">Add
+                    Posts</a></button>
+                <button style="margin: 4px" class="btn btn-primary text-uppercase"><a href="/logout"
+                                                                                      style="color:white">Logout</a>
+                </button>
+            </div>
+            <hr>
+
+            <h1>Upload A File</h1>
+            <form action="/uploader" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <div>
+                    <button style="margin-top: 8px" class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit</button>
+                </div>
+<!--                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Submit</button>-->
+<!--                <button class="btn btn-primary text-uppercase"><a href="/uploader" style="color:white">Submit</a></button>-->
+            </form>
+
+            <hr>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">SNo.</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">TagLine</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                <tr>
+                    <th scope="row">{{post.sno}}</th>
+                    <td>{{post.title}}</td>
+                    <td>{{post.tagline}}</td>
+                    <td>{{post.slug}}</td>
+                    <td>{{post.img_filename}}</td>
+                    <td>
+                        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase"
+                                                                        href="/edit/{{post.sno}}">Edit</a></div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase"
+                                                                        href="/delete/{{post.sno}}">Delete</a></div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Pager-->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#">Older Posts
+                →</a></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
